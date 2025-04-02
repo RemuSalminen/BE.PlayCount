@@ -11,13 +11,23 @@ public class Plugin : BasePlugin
 {
     internal static new ManualLogSource Log;
 
+    // For Banner detection
+    public static bool isActive = false;
+
+    // Mode Switch
+    public static string ShowScoreKey = "Show Score?";
+    public static BepInEx.Configuration.ConfigEntry<bool> ShowScore;
+
     public override void Load()
     {
-        // Plugin startup logic
         Log = base.Log;
+
+        ShowScore = Config.Bind("General",
+            ShowScoreKey,
+            true,
+            new BepInEx.Configuration.ConfigDescription("Toggle between displaying the current score and the total playcount."));
+
         Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
         Log.LogInfo($"Loaded {MyPluginInfo.PLUGIN_NAME}!");
     }
-
-    public static bool isActive = false;
 }
