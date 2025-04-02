@@ -1,5 +1,6 @@
 ﻿global using BepInEx;
 global using HarmonyLib;
+global using UnityEngine;
 using BepInEx.Logging;
 using BepInEx.Unity.IL2CPP;
 using System.Reflection;
