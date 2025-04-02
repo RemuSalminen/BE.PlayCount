@@ -15,6 +15,7 @@ namespace PlayCount.Patches
         [HarmonyPatch(typeof(MultiStartGameMenuStep), nameof(MultiStartGameMenuStep.Open))]
         public static void BannerOpenFix()
         {
+            Plugin.isActive = true;
             Plugin.Log.LogInfo("Opening Multiplayer UI soon!");
         }
 
@@ -22,6 +23,7 @@ namespace PlayCount.Patches
         [HarmonyPatch(typeof(MultiStartGameMenuStep), nameof(MultiStartGameMenuStep.Close))]
         public static void BannerCloseFix()
         {
+            if (!Plugin.isActive) return;
             Plugin.Log.LogInfo("Closed Multiplayer UI!");
         }
     }

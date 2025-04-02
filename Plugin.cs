@@ -18,4 +18,6 @@ public class Plugin : BasePlugin
         Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
         Log.LogInfo($"Loaded {MyPluginInfo.PLUGIN_NAME}!");
     }
+
+    public static bool isActive = false;
 }
