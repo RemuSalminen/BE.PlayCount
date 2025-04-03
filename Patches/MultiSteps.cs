@@ -18,11 +18,13 @@ public class MultiSteps
         Plugin.Log.LogInfo("Opened Multiplayer UI!");
         Plugin.isActive = true;
 
-        Plugin.Log.LogInfo("Fetching Config...");
-        int CandleAmount = Plugin.ShowScore.Value ? 2 : 1;
-        int Wins = 2;
-        int Losses = 3;
-        bool WonPrevious = false;
+        Plugin.Log.LogInfo("Fetching Stats...");
+        int CandleAmount;
+        int Wins;
+        int Losses;
+        bool WonPrevious;
+        bool New;
+        (CandleAmount, Wins, Losses, WonPrevious, New) = Internal.Stats.GetStats();
         Plugin.Log.LogInfo($"Fetch Complete!\n ShowScore: {Plugin.ShowScore.Value}\n W: {Wins}\n L: {Losses}\n Prev: {WonPrevious}");
 
         Plugin.Log.LogInfo($"Placing {CandleAmount} Candles!");
