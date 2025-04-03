@@ -19,11 +19,14 @@ public class MultiSteps
         Plugin.isActive = true;
 
         Plugin.Log.LogInfo("Fetching Config...");
-        int CandleAmount = Plugin.ShowScore.Value ? 1 : 2;
-        Plugin.Log.LogInfo("Fetch Complete!");
+        int CandleAmount = Plugin.ShowScore.Value ? 2 : 1;
+        int Wins = 2;
+        int Losses = 3;
+        bool WonPrevious = false;
+        Plugin.Log.LogInfo($"Fetch Complete!\n ShowScore: {Plugin.ShowScore.Value}\n W: {Wins}\n L: {Losses}\n Prev: {WonPrevious}");
 
-        Plugin.Log.LogInfo("Placing Candles!");
-        Internal.CandleSystem.Place(CandleAmount);
+        Plugin.Log.LogInfo($"Placing {CandleAmount} Candles!");
+        Internal.CandleSystem.Place(CandleAmount, Wins, Losses, WonPrevious);
         Plugin.Log.LogInfo("Candles Placed!");
     }
 
