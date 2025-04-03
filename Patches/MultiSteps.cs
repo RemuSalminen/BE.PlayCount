@@ -1,10 +1,4 @@
 ﻿using Menu.MenuSteps.MatchMenu;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Utilities;
 
 namespace PlayCount.Patches;
 
@@ -23,8 +17,12 @@ public class MultiSteps
         Plugin.Log.LogInfo($"Fetch Complete!\n ShowScore: {Plugin.ShowScore.Value}\n W: {Wins}\n L: {Losses}\n Prev: {WonPrevious}");
 
         Plugin.Log.LogInfo($"Placing {CandleAmount} Candles!");
-        Internal.CandleSystem.Place(CandleAmount, Wins, Losses, WonPrevious);
+        Internal.CandleSystem.Place(CandleAmount, Wins, Losses);
         Plugin.Log.LogInfo("Candles Placed!");
+
+        Plugin.Log.LogInfo("Lighting Candles!");
+        Internal.CandleSystem.DecorateCandles(WonPrevious, New);
+        Plugin.Log.LogInfo("Candles Lit!");
     }
 
     [HarmonyPrefix]
