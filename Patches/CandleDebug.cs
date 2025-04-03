@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,12 +12,14 @@ namespace PlayCount.Patches;
 [HarmonyPatch]
 public class CandleDebug
 {
+    //
     [HarmonyPostfix]
     [HarmonyPatch(typeof(CandleActivation), nameof(CandleActivation.ActivateCandle))]
     public static void CActivate()
     {
         Plugin.Log.LogDebug("Activated Candle!");
     }
+    //
     [HarmonyPostfix]
     [HarmonyPatch(typeof(CandleActivation), nameof(CandleActivation.SetActiveCandle))]
     public static void CActive()
@@ -47,15 +50,21 @@ public class CandleDebug
     {
         Plugin.Log.LogDebug("Played MenuCandle Cut!");
     }
-    // Continuosly called when the candle is lit
+    // Continuosly called when a candle is burning
     [HarmonyPostfix]
     [HarmonyPatch(typeof(CandleBase), nameof(CandleBase.StartBurning))]
     public static void CSBurning()
     {
         Plugin.Log.LogDebug("MenuCandle Started Burning!");
-        throw new Exception("Dirty exception");
     }
-    // 
+    //
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(CandleBase), nameof(CandleBase.StopBurning))]
+    public static void CStopBurning()
+    {
+        Plugin.Log.LogDebug("MenuCandle Stopped Burning!");
+    }
+    // Called when transitioning to a new menu via candle cut
     [HarmonyPostfix]
     [HarmonyPatch(typeof(CandleBase), nameof(CandleBase.OnTriggerEnter))]
     public static void CTriggerEnter()
