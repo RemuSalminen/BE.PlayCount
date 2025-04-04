@@ -30,4 +30,21 @@ public class Stats
         New = (Wins + Losses) == 0;
         return (CandleAmount, Wins, Losses, WonPrevious, New);
     }
+
+    public static void UpdateStats(PlayerData lastOpponent)
+    {
+        Plugin.Log.LogInfo($"Updating Stats for {lastOpponent.Name} ({lastOpponent.PlayFabID})!");
+        if (lastOpponent.PlayFabID != CurOpponentID) {
+            Plugin.Log.LogError("lastOpponent != CurOpponent\nAttempting to fetch correct stats!");
+            GetStats(lastOpponent.PlayFabID);
+        };
+        LastOpponentID = CurOpponentID;
+        CurOpponentID = null;
+        LastOpponentID = lastOpponent.PlayFabID;
+        WonPrevious = !lastOpponent.IsWinner;
+        if (WonPrevious) Wins += 1; else Losses += 1;
+
+        Plugin.Log.LogInfo($"Stats Updated!");
+        return;
+    }
 }
