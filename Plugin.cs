@@ -34,7 +34,13 @@ public class Plugin : BasePlugin
             new BepInEx.Configuration.ConfigDescription("Toggle between displaying the current score and the total playcount."));
 
         // Creates the required Json if it does not exist
-        if (!File.Exists(JsonDataFilePath)) { Directory.CreateDirectory(JsonDataFolderPath); File.Create(JsonDataFilePath); };
+        if (!File.Exists(JsonDataFilePath)) {
+            Directory.CreateDirectory(JsonDataFolderPath);
+            using (StreamWriter sw = File.CreateText(JsonDataFilePath))
+            {
+                sw.WriteLine("{\n\n}");
+            }
+        };
 
         Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
         Log.LogInfo($"Loaded {MyPluginInfo.PLUGIN_NAME}!");
