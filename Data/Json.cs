@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Text.Json;
 using System.IO;
 
@@ -10,12 +6,12 @@ namespace PlayCount.Data;
 
 public class Stats
 {
-    public List<Opponent> Opponents { get; set; }
+    public List<Opponent> Opponents { get; set; } = new List<Opponent>();
 }
 public class Opponent
 {
     public string PlayFabID { get; set; }
-    public Data Data { get; set; }
+    public Data Data { get; set; } = new Data();
 }
 public class Data
 {
@@ -29,11 +25,13 @@ public class Json
     public static Data Get(string JsonPath, string PlayFabID)
     {
         Plugin.Log.LogInfo("Fetching data from Json!");
-        Stats stats = Get(JsonPath);
-        //int OpponentIndex = stats.Opponents.FindIndex(x => x.PlayFabID == PlayFabID);
-        Opponent opponent = stats.Opponents.Find(x => x.PlayFabID == PlayFabID);
+        Stats stats = Read(JsonPath);
 
-        //Data data = stats.Opponents[OpponentIndex].Data;
+        Plugin.Log.LogInfo("Finding Opponent from Json!");
+        Opponent opponent = stats.Opponents.Find(x => x.PlayFabID == PlayFabID);
+        if (opponent == null) opponent = new Opponent();
+        Plugin.Log.LogInfo("Opponent: "+opponent.ToString());
+
         Data data = opponent.Data;
         return data;
     }
@@ -41,7 +39,7 @@ public class Json
     public static void Add(string JsonPath, string PlayFabID, Data Data)
     {
         Plugin.Log.LogInfo("Adding New Opponent!");
-        Stats stats = Get(JsonPath);
+        Stats stats = Read(JsonPath);
         Opponent opponent = new Opponent
         {
             PlayFabID = PlayFabID,
@@ -55,21 +53,23 @@ public class Json
 
     public static void Edit(string JsonPath, string PlayFabID, Data NewData)
     {
-        Stats stats = Get(JsonPath);
-        //int OpponentIndex = stats.Opponents.FindIndex(x => x.PlayFabID == PlayFabID);
-        Opponent opponent = stats.Opponents.Find(x => x.PlayFabID == PlayFabID);
+        Plugin.Log.LogInfo("Editing Stats!");
+        Stats stats = Read(JsonPath);
 
-        //stats.Opponents[OpponentIndex].Data = NewData;
+        Opponent opponent = stats.Opponents.Find(x => x.PlayFabID == PlayFabID);
         opponent.Data = NewData;
 
         Write(JsonPath, stats);
+        Plugin.Log.LogInfo("Edited Stats!");
     }
 
 
-    private static Stats Get(string JsonPath)
+    private static Stats Read(string JsonPath)
     {
+        Plugin.Log.LogInfo("Reading Json!");
         string json = File.ReadAllText(JsonPath);
         Stats stats = JsonSerializer.Deserialize<Stats>(json);
+        Plugin.Log.LogInfo("Read Json!");
         return stats;
     }
     private static void Write(string JsonPath, Stats UpdatedStats)
