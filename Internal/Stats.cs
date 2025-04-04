@@ -1,33 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UI.EndGameScore;
+using PlayCount.Data;
 
 namespace PlayCount.Internal;
 
-public class Stats
+public static class Stats
 {
     static readonly int CandleAmount = Plugin.ShowScore.Value ? 2 : 1;
-    static int Wins = 0;
-    static int Losses = 0;
+    static int Wins;
+    static int Losses;
     /// <summary>
     /// Did the Player win their previous match
     /// </summary>
-    static bool WonPrevious = false;
+    static bool WonPrevious;
     static bool New = true;
-    static string LastOpponentID = null;
-    static string CurOpponentID = null;
+    static string LastOpponentID;
+    static string CurOpponentID;
     public static (int CandleAmount, int Wins, int Losses, bool WonPrevious, bool New) GetStats(string curOpponentID)
     {
         CurOpponentID = curOpponentID;
+        Plugin.Log.LogDebug($"CurOp: {CurOpponentID}\nLastOp: {LastOpponentID}");
         if (CurOpponentID == LastOpponentID) return (CandleAmount, Wins, Losses, WonPrevious, New);
 
-        Wins = 2;
-        Losses = 3;
-        WonPrevious = false;
+        Data.Data curOpponentData = Json.Get(Plugin.JsonDataFilePath, curOpponentID);
+        Wins = curOpponentData.Wins;
+        Losses = curOpponentData.Losses;
+        WonPrevious = curOpponentData.WonPrevious;
         New = (Wins + Losses) == 0;
+
         return (CandleAmount, Wins, Losses, WonPrevious, New);
     }
 
@@ -40,9 +39,18 @@ public class Stats
         };
         LastOpponentID = CurOpponentID;
         CurOpponentID = null;
-        LastOpponentID = lastOpponent.PlayFabID;
         WonPrevious = !lastOpponent.IsWinner;
         if (WonPrevious) Wins += 1; else Losses += 1;
+
+        Data.Data data = new()
+        {
+            Wins = Wins,
+            Losses = Losses,
+            WonPrevious = WonPrevious
+        };
+
+        if (New) Json.Add(Plugin.JsonDataFilePath, LastOpponentID, data); 
+            else Json.Edit(Plugin.JsonDataFilePath, LastOpponentID, data);
 
         Plugin.Log.LogInfo($"Stats Updated!");
         return;
