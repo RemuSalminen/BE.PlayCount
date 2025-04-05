@@ -50,4 +50,12 @@ public class MultiSteps
         UI.EndGameScore.PlayerData Opponent = __instance._endGameScoreUI.RightPlayer;
         Internal.Stats.UpdateStats(Opponent);
     }
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(CustomEndGameMenuStep), nameof(CustomEndGameMenuStep.Open))]
+    public static void EndGameFix(CustomEndGameMenuStep __instance)
+    {
+        Plugin.Log.LogInfo("Multi: Custom Match Over!");
+        UI.EndGameScore.PlayerData Opponent = __instance._endGameScoreUI.RightPlayer;
+        Internal.Stats.UpdateStats(Opponent);
+    }
 }
