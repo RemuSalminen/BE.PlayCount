@@ -61,7 +61,7 @@ internal class CandleSystem
         {
             Plugin.Log.LogInfo($"Placing {i + 1} Candle");
             MenuCandle Candle = MenuBase.BaseInstance.MenuCandleBuilder.CreateCandle(CandleParent, CConfigs[i]);
-            MenuBase.BaseInstance.MenuCandleBuilder.PlaceCandle(Candle, Plugin.ShowScore.Value ? (CandleLeft - i*2*CandleLeft) : 0f );
+            MenuBase.BaseInstance.MenuCandleBuilder.PlaceCandle(Candle, Plugin.ShowScore.Value ? (CandleLeft - i*2*CandleLeft) : CandleLeft );
 
             Candle.MoveToward._xrRigHead = XrRigManager.InstanceReference.HeadController;
             Candle.MoveToward.IsLookedAt = true;
