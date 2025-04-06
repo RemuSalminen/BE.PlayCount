@@ -12,7 +12,7 @@ public static class Stats
     /// Did the Player win their previous match
     /// </summary>
     static bool WonPrevious;
-    static bool New = true;
+    static bool New;
     static string LastOpponentID;
     static string CurOpponentID;
     public static (int CandleAmount, int Wins, int Losses, bool WonPrevious, bool New) GetStats(string curOpponentID)
@@ -49,7 +49,7 @@ public static class Stats
             WonPrevious = WonPrevious
         };
 
-        if (New) Json.Add(Plugin.JsonDataFilePath, LastOpponentID, data); 
+        if ((Wins + Losses) == 1) Json.Add(Plugin.JsonDataFilePath, LastOpponentID, data); 
             else Json.Edit(Plugin.JsonDataFilePath, LastOpponentID, data);
 
         Plugin.Log.LogInfo($"Stats Updated!");
