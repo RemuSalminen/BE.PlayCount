@@ -27,10 +27,10 @@ public class Json
         Plugin.Log.LogInfo("Fetching data from Json!");
         Stats stats = Read(JsonPath);
 
-        Plugin.Log.LogInfo("Finding Opponent from Json!");
+        Plugin.Log.LogInfo("Finding Opponent!");
         Opponent opponent = stats.Opponents.Find(x => x.PlayFabID == PlayFabID);
         if (opponent == null) opponent = new Opponent();
-        Plugin.Log.LogInfo("Opponent: "+opponent.ToString());
+        Plugin.Log.LogInfo("Opponent: "+opponent.PlayFabID);
 
         Data data = opponent.Data;
         return data;
@@ -66,18 +66,18 @@ public class Json
 
     private static Stats Read(string JsonPath)
     {
-        Plugin.Log.LogInfo("Reading Json!");
+        Plugin.Log.LogDebug("Reading Json!");
         string json = File.ReadAllText(JsonPath);
         Stats stats = JsonSerializer.Deserialize<Stats>(json);
-        Plugin.Log.LogInfo("Read Json!");
+        Plugin.Log.LogDebug("Read Json!");
         return stats;
     }
     private static void Write(string JsonPath, Stats UpdatedStats)
     {
-        Plugin.Log.LogInfo("Writing Stats File!");
+        Plugin.Log.LogDebug("Writing Stats File!");
         string JsonString = JsonSerializer.Serialize(UpdatedStats);
         File.WriteAllText(JsonPath, JsonString);
-        Plugin.Log.LogInfo("Wrote Stats File!");
+        Plugin.Log.LogDebug("Wrote Stats File!");
     }
 }
 
