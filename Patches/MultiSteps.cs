@@ -14,9 +14,11 @@ public class MultiSteps
         Plugin.isActive = true;
 
         Plugin.Log.LogInfo("Multi: Fetching Stats...");
+        if (__instance == null) { Plugin.Log.LogFatal("Opponent Does Not Exist!"); return; }
         string CurOpponentID = __instance._opponentBanner.Data.PlayFabID;
         (int CandleAmount, int Wins, int Losses, bool WonPrevious, bool New) = Internal.Stats.GetStats(CurOpponentID);
-        Plugin.Log.LogInfo($"Multi: Fetch Complete!\n ShowScore: {Plugin.ShowScore.Value}\nNew: {New}\n W: {Wins}\n L: {Losses}\n Prev: {WonPrevious}");
+        Plugin.Log.LogInfo($"Multi: Fetch Complete!");
+        Plugin.Log.LogDebug($"Data:\n ShowScore: {Plugin.ShowScore.Value}\nNew: {New}\n W: {Wins}\n L: {Losses}\n Prev: {WonPrevious}");
 
         Plugin.Log.LogInfo($"Multi: Placing {CandleAmount} Candle(s)!");
         Internal.CandleSystem.Place(CandleAmount, Wins, Losses);
