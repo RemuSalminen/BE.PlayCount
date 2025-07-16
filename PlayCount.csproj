@@ -42,6 +42,9 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\Lib\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Il2CppInterop.Runtime">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Broken Edge\BepInEx\core\Il2CppInterop.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Il2Cppmscorlib">
       <HintPath>..\Lib\Il2Cppmscorlib.dll</HintPath>
     </Reference>
