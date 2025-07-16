@@ -8,11 +8,11 @@ A [MelonLoader](https://melonwiki.xyz/#/) mod for the VR game [Broken Edge](http
 <details>
 	<summary>Cautionary Note</summary>
 	This is a port of my first BepInEx mod to MelonLoader.
-	Though I've tested functionality, Nothing's guaranteed.
+	I have not personally tested the port's functionality.
 </details>
 
 ## Config
-Access the config file in UserData/PlayCount.cfg
+Access the config file in UserData/MelonPreferences.cfg
 
 ### Show Score?
 Display the current score against a player instead of the playcount.
