@@ -1,9 +1,7 @@
 ﻿global using MelonLoader;
 global using HarmonyLib;
 global using UnityEngine;
-//using BepInEx.Unity.IL2CPP;
 using System.IO;
-using System.Reflection;
 
 namespace PlayCount;
 
