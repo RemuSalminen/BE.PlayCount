@@ -34,6 +34,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HarmonyX" Version="2.14.0" />
     <PackageReference Include="LavaGang.MelonLoader" Version="0.7.1" />
   </ItemGroup>
 

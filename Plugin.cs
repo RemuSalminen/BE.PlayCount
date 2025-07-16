@@ -1,38 +1,42 @@
-﻿global using BepInEx;
+﻿global using MelonLoader;
 global using HarmonyLib;
 global using UnityEngine;
-using BepInEx.Logging;
-using BepInEx.Unity.IL2CPP;
+//using BepInEx.Unity.IL2CPP;
 using System.IO;
 using System.Reflection;
 
 namespace PlayCount;
 
-[BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-public class Plugin : BasePlugin
+public class Plugin : MelonMod
 {
-    internal static new ManualLogSource Log;
-
+    internal static MelonLogger.Instance Log = Melon<Plugin>.Logger;
+    
     // For Banner detection
     public static bool isActive = false;
 
+    // MelonLoader Configs
+    private MelonPreferences_Category _Category;
+
     // Mode Switch
     public static string ShowScoreKey = "Show Score?";
-    public static BepInEx.Configuration.ConfigEntry<bool> ShowScore;
+    public static MelonPreferences_Entry<bool> ShowScore;
 
     // Json that stores all data
-    public static readonly string JsonDataFolderPath = Paths.PluginPath + "\\" + MyPluginInfo.PLUGIN_GUID;
+    public static readonly string JsonDataFolderPath = MelonLoader.Utils.MelonEnvironment.UserDataDirectory + "\\" + System.Reflection.Assembly.GetExecutingAssembly().FullName;
     public static readonly string JsonDataFilePath = JsonDataFolderPath + "\\Stats.json";
 
-    public override void Load()
+    // Create Configs
+    public override void OnEarlyInitializeMelon()
     {
-        Log = base.Log;
+        _Category = MelonPreferences.CreateCategory("PlayCount");
+        ShowScore = _Category.CreateEntry(ShowScoreKey, false, ShowScoreKey, "Toggle between displaying the current score and the total playcount.");
 
-        ShowScore = Config.Bind("General",
-            ShowScoreKey,
-            false,
-            new BepInEx.Configuration.ConfigDescription("Toggle between displaying the current score and the total playcount."));
+        MelonPreferences.Save();
+        base.OnEarlyInitializeMelon();
+    }
 
+    public override void OnInitializeMelon()
+    {
         // Creates the required Json if it does not exist
         if (!File.Exists(JsonDataFilePath)) {
             Directory.CreateDirectory(JsonDataFolderPath);
@@ -42,7 +46,9 @@ public class Plugin : BasePlugin
             }
         };
 
-        Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
-        Log.LogInfo($"Loaded {MyPluginInfo.PLUGIN_NAME}!");
+        HarmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
+        Log.Msg($"Loaded {MelonAssembly.Assembly.FullName}!");
+
+        base.OnInitializeMelon();
     }
 }
