@@ -24,13 +24,13 @@ public class Json
 {
     public static Data Get(string JsonPath, string PlayFabID)
     {
-        Plugin.Log.LogInfo("Fetching data from Json!");
+        Plugin.Log.Msg("Fetching data from Json!");
         Stats stats = Read(JsonPath);
 
-        Plugin.Log.LogInfo("Finding Opponent!");
+        Plugin.Log.Msg("Finding Opponent!");
         Opponent opponent = stats.Opponents.Find(x => x.PlayFabID == PlayFabID);
         if (opponent == null) opponent = new Opponent();
-        Plugin.Log.LogInfo("Opponent: "+opponent.PlayFabID);
+        Plugin.Log.Msg("Opponent: "+opponent.PlayFabID);
 
         Data data = opponent.Data;
         return data;
@@ -38,7 +38,7 @@ public class Json
 
     public static void Add(string JsonPath, string PlayFabID, Data Data)
     {
-        Plugin.Log.LogInfo("Adding New Opponent!");
+        Plugin.Log.Msg("Adding New Opponent!");
         Stats stats = Read(JsonPath);
         Opponent opponent = new Opponent
         {
@@ -48,36 +48,36 @@ public class Json
         stats.Opponents.Add(opponent);
 
         Write(JsonPath, stats);
-        Plugin.Log.LogInfo("Added New Opponent!");
+        Plugin.Log.Msg("Added New Opponent!");
     }
 
     public static void Edit(string JsonPath, string PlayFabID, Data NewData)
     {
-        Plugin.Log.LogInfo("Editing Stats!");
+        Plugin.Log.Msg("Editing Stats!");
         Stats stats = Read(JsonPath);
 
         Opponent opponent = stats.Opponents.Find(x => x.PlayFabID == PlayFabID);
         opponent.Data = NewData;
 
         Write(JsonPath, stats);
-        Plugin.Log.LogInfo("Edited Stats!");
+        Plugin.Log.Msg("Edited Stats!");
     }
 
 
     private static Stats Read(string JsonPath)
     {
-        Plugin.Log.LogDebug("Reading Json!");
+        Plugin.Log.Msg("DEBUG: Reading Json!");
         string json = File.ReadAllText(JsonPath);
         Stats stats = JsonSerializer.Deserialize<Stats>(json);
-        Plugin.Log.LogDebug("Read Json!");
+        Plugin.Log.Msg("DEBUG: Read Json!");
         return stats;
     }
     private static void Write(string JsonPath, Stats UpdatedStats)
     {
-        Plugin.Log.LogDebug("Writing Stats File!");
+        Plugin.Log.Msg("DEBUG: Writing Stats File!");
         string JsonString = JsonSerializer.Serialize(UpdatedStats);
         File.WriteAllText(JsonPath, JsonString);
-        Plugin.Log.LogDebug("Wrote Stats File!");
+        Plugin.Log.Msg("DEBUG: Wrote Stats File!");
     }
 }
 
