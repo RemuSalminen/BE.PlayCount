@@ -59,7 +59,7 @@ internal class CandleSystem
 
         for (int i = 0; i < CandleAmount; i++)
         {
-            Plugin.Log.LogDebug($"Placing {i + 1} Candle");
+            Plugin.Log.Msg($"DEBUG: Placing {i + 1} Candle");
             MenuCandle Candle = MenuBase.BaseInstance.MenuCandleBuilder.CreateCandle(CandleParent, CConfigs[i]);
             MenuBase.BaseInstance.MenuCandleBuilder.PlaceCandle(Candle, Plugin.ShowScore.Value ? (CandleLeft - i*2*CandleLeft) : CandleLeft );
 
@@ -69,9 +69,9 @@ internal class CandleSystem
             Candle.MoveToward.MoveTowardDistance = 0f;
             Candle.InitialAnimationDone = true;
 
-            Plugin.Log.LogDebug($"{Candle.gameObject.transform.position}");
+            Plugin.Log.Msg($"DEBUG: {Candle.gameObject.transform.position}");
             CandleList.Add(Candle);
-            Plugin.Log.LogDebug($"Placed {i + 1} Candle");
+            Plugin.Log.Msg($"DEBUG: Placed {i + 1} Candle");
         }
     }
 
