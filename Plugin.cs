@@ -46,7 +46,6 @@ public class Plugin : MelonMod
             }
         };
 
-        HarmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
         Log.Msg($"Loaded {MelonAssembly.Assembly.FullName}!");
 
         base.OnInitializeMelon();
