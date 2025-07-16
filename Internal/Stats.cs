@@ -18,7 +18,7 @@ public static class Stats
     public static (int CandleAmount, int Wins, int Losses, bool WonPrevious, bool New) GetStats(string curOpponentID)
     {
         CurOpponentID = curOpponentID;
-        Plugin.Log.LogDebug($"CurOp: {CurOpponentID}\nLastOp: {LastOpponentID}");
+        Plugin.Log.Msg($"DEBUG: CurOp: {CurOpponentID}\nLastOp: {LastOpponentID}");
         if (CurOpponentID == LastOpponentID) return (CandleAmount, Wins, Losses, WonPrevious, New);
 
         Data.Data curOpponentData = Json.Get(Plugin.JsonDataFilePath, curOpponentID);
@@ -32,9 +32,9 @@ public static class Stats
 
     public static void UpdateStats(PlayerData lastOpponent)
     {
-        Plugin.Log.LogInfo($"Updating Stats for {lastOpponent.Name} ({lastOpponent.PlayFabID})!");
+        Plugin.Log.Msg($"Updating Stats for {lastOpponent.Name} ({lastOpponent.PlayFabID})!");
         if (lastOpponent.PlayFabID != CurOpponentID) {
-            Plugin.Log.LogError("lastOpponent != CurOpponent\nAttempting to fetch correct stats!");
+            Plugin.Log.Error("lastOpponent != CurOpponent\nAttempting to fetch correct stats!");
             GetStats(lastOpponent.PlayFabID);
         };
         LastOpponentID = CurOpponentID;
@@ -52,7 +52,7 @@ public static class Stats
         if ((Wins + Losses) == 1) Json.Add(Plugin.JsonDataFilePath, LastOpponentID, data); 
             else Json.Edit(Plugin.JsonDataFilePath, LastOpponentID, data);
 
-        Plugin.Log.LogInfo($"Stats Updated!");
+        Plugin.Log.Msg($"Stats Updated!");
         return;
     }
 }
