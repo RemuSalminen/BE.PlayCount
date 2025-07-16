@@ -4,6 +4,7 @@
 Readme _Soon_<sup>TM</sup>
 
 A [BepInEx](https://github.com/BepInEx/BepInEx) 6 mod for the VR game [Broken Edge](https://trebuchet.fun/en/games/broken-edge).
+Now also a [MelonLoader](https://melonwiki.xyz) mod. (ps. Check the [MelonLoader Branch](https://github.com/RemuSalminen/BE.PlayCount/tree/MelonLoader))
 
 <details>
 	<summary>Cautionary Note</summary>
