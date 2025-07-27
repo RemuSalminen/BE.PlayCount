@@ -23,6 +23,7 @@
     <Authors>Trinol</Authors>
     <Copyright>Copyright © $(Authors) 2025</Copyright>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <BaseOutputPath>bin\PCVR</BaseOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
