@@ -15,7 +15,7 @@
     </RestoreAdditionalProjectSources>
     <Title>PlayCount</Title>
 	<Version>1.0.1</Version>
-	<AssemblyTitle>$(Title)-$(Version)</AssemblyTitle>
+	<AssemblyTitle>$(Title)-$(Version)-PCVR</AssemblyTitle>
     <AssemblyName>com.Trinol.$(Title)</AssemblyName>
     <IsPublishable>False</IsPublishable>
     <Company></Company>
@@ -52,6 +52,6 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy &quot;$(TargetPath)&quot; &quot;$(PluginPath)&quot;&#xD;&#xA;del &quot;$(PluginPath)\$(Title)-*.dll&quot;&#xD;&#xA;rename &quot;$(PluginPath)\$(AssemblyName).dll&quot; &quot;$(AssemblyTitle).dll&quot;" />
+    <Exec Command="copy &quot;$(TargetPath)&quot; &quot;$(PluginPath)&quot;&#xD;&#xA;del &quot;$(PluginPath)\$(Title)-*-PCVR.dll&quot;&#xD;&#xA;rename &quot;$(PluginPath)\$(AssemblyName).dll&quot; &quot;$(AssemblyTitle).dll&quot;" />
   </Target>
 </Project>
